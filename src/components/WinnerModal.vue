@@ -20,11 +20,12 @@ const visible = ref(props.gameOver)
 
       <div v-else>
         <p v-for="winner of props.winners" :key="winner.id">
-          The winner is {{ winner.name }} with a score of {{ winner.score }}!
+          The winner is {{ winner.name }} with a score of {{ winner.totalScore }}!
         </p>
       </div>
 
       <div class="flex justify-end mt-4">
+        <!-- clear game state on end game -->
         <RouterLink to="/"><Button label="End Game" style="color: white"></Button></RouterLink>
       </div>
     </Dialog>
