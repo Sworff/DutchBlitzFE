@@ -13,7 +13,7 @@ const onCellEditComplete = (event: { data: Player; newValue: string }) => {
 <template>
   <section class="mb-10">
     <DataTable
-      :value="store.players"
+      :value="store.gameState.players"
       editMode="cell"
       class="mb-3"
       @cell-edit-complete="onCellEditComplete"
@@ -41,7 +41,7 @@ const onCellEditComplete = (event: { data: Player; newValue: string }) => {
             severity="danger"
             aria-label="delete-player"
             variant="text"
-            :disabled="store.players.length < 3"
+            :disabled="store.gameState.players.length < 3"
             @click="store.removePlayer(data.id)"
           ></Button>
         </template>
@@ -49,7 +49,7 @@ const onCellEditComplete = (event: { data: Player; newValue: string }) => {
     </DataTable>
 
     <Button
-      v-if="store.players.length < 8"
+      v-if="store.gameState.players.length < 8"
       icon="pi pi-plus"
       aria-label="add-player"
       variant="outlined"

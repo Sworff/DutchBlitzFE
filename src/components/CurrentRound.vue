@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useStore } from '@/stores/store'
 import { ref } from 'vue'
-import { v4 as uuidv4 } from 'uuid'
 
 const store = useStore()
 const editingRows = ref([])
@@ -10,11 +9,6 @@ const editingRows = ref([])
 const onRowEditSave = (event: any) => {
   const { data } = event
   store.setRoundScore(data)
-}
-
-function finishRound() {
-  store.startNextRound({ id: uuidv4(), round: 1, players: store.players })
-  store.resetPlayerScore(store.players)
 }
 </script>
 
@@ -25,7 +19,7 @@ function finishRound() {
       <template #content>
         <DataTable
           v-model:editingRows="editingRows"
-          :value="store.players"
+          :value="store.gameState.players"
           editMode="row"
           size="small"
           @row-edit-save="onRowEditSave"
@@ -63,7 +57,7 @@ function finishRound() {
           variant="outlined"
           label="Finish Round"
           class="w-full mt-4"
-          @click="finishRound"
+          @click="store.startNextRound"
         ></Button>
       </template>
     </Card>

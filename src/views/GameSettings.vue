@@ -31,7 +31,7 @@ function back() {
     <div v-if="gameMode === 'Multi'">
       <strong>Room Number</strong>
       <Button
-        :label="route.params.roomId"
+        :label="route.params.roomId as string"
         class="w-full mt-2"
         icon="pi pi-copy"
         iconPos="right"
@@ -52,7 +52,7 @@ function back() {
       label="Start Game"
       style="color: white"
       @click="startGame()"
-      :disabled="store.players.length < 2"
+      :disabled="store.gameState.players.length < 2"
     ></Button>
 
     <Button

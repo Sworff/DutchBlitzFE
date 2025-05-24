@@ -1,47 +1,39 @@
-import type { GameState, Player, Round } from '@/types/types'
+import type { GameState, Player } from '@/types/types'
 import { computed, ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 
 export function useDutchBlitz() {
-  const players = ref<Array<Player>>([
-    {
-      id: uuidv4(),
-      name: 'Player 1',
-      totalScore: 0,
-      score: {
-        dutch: 0,
-        blitz: 0,
-        roundScore: 0,
-      },
-    },
-    {
-      id: uuidv4(),
-      name: 'Player 2',
-      totalScore: 0,
-      score: {
-        dutch: 0,
-        blitz: 0,
-        roundScore: 0,
-      },
-    },
-  ])
-
-  // const round = ref<Round>({
-  //   id: uuidv4(),
-  //   round: 1,
-  //   players: players.value,
-  // })
-
   const gameState = ref<GameState>({
     winningScore: 75,
-    players: players.value,
+    players: [
+      {
+        id: uuidv4(),
+        name: 'Player 1',
+        totalScore: 0,
+        score: {
+          dutch: 0,
+          blitz: 0,
+          roundScore: 0,
+        },
+      },
+      {
+        id: uuidv4(),
+        name: 'Player 2',
+        totalScore: 0,
+        score: {
+          dutch: 0,
+          blitz: 0,
+          roundScore: 0,
+        },
+      },
+    ],
     rounds: [],
-    winners: [],
+    leaderBoard: [],
     isGameOver: false,
   })
 
   const leaderBoard = computed(() => {
-    return players.value.sort((a, b) => b.totalScore - a.totalScore)
+    return gameState.value.players.sort((a, b) => b.totalScore - a.totalScore)
   })
 
   const winners = computed(() => {
@@ -55,9 +47,9 @@ export function useDutchBlitz() {
   })
 
   function addPlayer() {
-    players.value.push({
+    gameState.value.players.push({
       id: uuidv4(),
-      name: `Player ${players.value.length + 1}`,
+      name: `Player ${gameState.value.players.length + 1}`,
       totalScore: 0,
       score: {
         dutch: 0,
@@ -68,15 +60,15 @@ export function useDutchBlitz() {
   }
 
   function editPlayer(player: Player, newName: string) {
-    players.value.filter((p) => p.id === player.id).map((p) => (p.name = newName))
+    gameState.value.players.filter((p) => p.id === player.id).map((p) => (p.name = newName))
   }
 
   function removePlayer(id: string) {
-    players.value = players.value.filter((p) => id !== p.id)
+    gameState.value.players = gameState.value.players.filter((p) => id !== p.id)
   }
 
   function setRoundScore(roundScore: Player) {
-    players.value
+    gameState.value.players
       .filter((p) => p.id === roundScore.id)
       .map((p) => {
         p.totalScore = roundScore.totalScore + roundScore.score.dutch - roundScore.score.blitz
@@ -84,16 +76,27 @@ export function useDutchBlitz() {
       })
   }
 
-  function startNextRound(round: Round) {
-    gameState.value.rounds.push(round)
+  function startNextRound() {
+    const currentPlayerScores = gameState.value.players.map((p) => ({
+      ...p,
+      score: { ...p.score },
+    }))
+
+    gameState.value.rounds.push({
+      id: uuidv4(),
+      round: gameState.value.rounds.length + 1,
+      players: currentPlayerScores,
+    })
+
+    resetPlayerScores()
   }
 
   function deleteRound(id: string) {
     gameState.value.rounds = gameState.value.rounds.filter((r) => id !== r.id)
   }
 
-  function resetPlayerScore(player: Player[]) {
-    player.forEach(
+  function resetPlayerScores() {
+    gameState.value.players.forEach(
       (p) =>
         (p.score = {
           dutch: 0,
@@ -105,8 +108,6 @@ export function useDutchBlitz() {
 
   return {
     gameState,
-    players,
-    // round,
     leaderBoard,
     winners,
 
@@ -117,6 +118,6 @@ export function useDutchBlitz() {
     setRoundScore,
     startNextRound,
     deleteRound,
-    resetPlayerScore,
+    resetPlayerScores,
   }
 }
