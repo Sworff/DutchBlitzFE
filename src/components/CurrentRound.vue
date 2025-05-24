@@ -12,7 +12,7 @@ const onRowEditSave = (event: any) => {
   store.setRoundScore(data)
 }
 
-function fuckYou() {
+function finishRound() {
   store.startNextRound({ id: uuidv4(), round: 1, players: store.players })
   store.resetPlayerScore(store.players)
 }
@@ -63,7 +63,7 @@ function fuckYou() {
           variant="outlined"
           label="Finish Round"
           class="w-full mt-4"
-          @click="fuckYou"
+          @click="finishRound"
         ></Button>
       </template>
     </Card>
