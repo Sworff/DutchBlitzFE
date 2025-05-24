@@ -28,7 +28,7 @@ export function useDutchBlitz() {
       },
     ],
     rounds: [],
-    leaderBoard: [],
+    winners: [],
     isGameOver: false,
   })
 
