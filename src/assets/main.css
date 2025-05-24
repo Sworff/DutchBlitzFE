@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+@import 'tailwindcss/preflight.css' layer(base);
+
+@import 'primeicons/primeicons.css';
+
+body {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+ol {
+  list-style: auto;
+  padding-left: 15px;
+}
