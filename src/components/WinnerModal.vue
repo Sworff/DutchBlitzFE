@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { Player } from '@/types/types'
-import { ref } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps<{
   winners: Player[]
   gameOver: boolean
 }>()
 
-const visible = ref(props.gameOver)
+const visible = computed(() => props.gameOver)
 </script>
 
 <template>

@@ -2,11 +2,15 @@
 import { useStore } from '@/stores/store'
 import type { Player } from '@/types/types'
 
+const props = defineProps<{
+  gameMode: string
+}>()
+
 const store = useStore()
 
 const onCellEditComplete = (event: { data: Player; newValue: string }) => {
   const { data, newValue } = event
-  store.editPlayer(data, newValue)
+  store.editPlayer(props.gameMode, data, newValue)
 }
 </script>
 
@@ -42,7 +46,7 @@ const onCellEditComplete = (event: { data: Player; newValue: string }) => {
             aria-label="delete-player"
             variant="text"
             :disabled="store.gameState.players.length < 3"
-            @click="store.removePlayer(data.id)"
+            @click="store.removePlayer(gameMode, data.id)"
           ></Button>
         </template>
       </Column>
@@ -55,7 +59,7 @@ const onCellEditComplete = (event: { data: Player; newValue: string }) => {
       variant="outlined"
       label="Add Player"
       class="w-full"
-      @click="store.addPlayer()"
+      @click="store.addPlayer(gameMode)"
     ></Button>
   </section>
 </template>

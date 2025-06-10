@@ -14,9 +14,9 @@ const gameMode = route.path.includes('multi') ? 'Multi' : 'Solo'
 
   <LeaderBoard :leaderboard="store.leaderBoard" />
 
-  <CurrentRound />
+  <CurrentRound :gameMode />
 
-  <CompletedRounds :rounds="store.gameState.rounds" />
+  <CompletedRounds :gameMode :rounds="store.gameState.rounds" />
 
   <WinnerModal :winners="store.winners" :gameOver="store.gameState.isGameOver" />
 </template>

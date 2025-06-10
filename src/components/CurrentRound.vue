@@ -2,13 +2,17 @@
 import { useStore } from '@/stores/store'
 import { ref } from 'vue'
 
+const props = defineProps<{
+  gameMode: string
+}>()
+
 const store = useStore()
 const editingRows = ref([])
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onRowEditSave = (event: any) => {
   const { data } = event
-  store.setRoundScore(data)
+  store.setRoundScore(props.gameMode, data)
 }
 </script>
 
@@ -57,7 +61,7 @@ const onRowEditSave = (event: any) => {
           variant="outlined"
           label="Finish Round"
           class="w-full mt-4"
-          @click="store.startNextRound"
+          @click="store.startNextRound(props.gameMode)"
         ></Button>
       </template>
     </Card>

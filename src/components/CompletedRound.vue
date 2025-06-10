@@ -2,7 +2,8 @@
 import { useStore } from '@/stores/store'
 import type { Round } from '@/types/types'
 
-defineProps<{
+const props = defineProps<{
+  gameMode: string
   rounds: Round[]
 }>()
 
@@ -24,7 +25,7 @@ const { deleteRound } = useStore()
                   variant="text"
                   severity="danger"
                   class="mr-2"
-                  @click="deleteRound(round.id)"
+                  @click="deleteRound(props.gameMode, round.id)"
                 ></Button>
               </div>
             </AccordionHeader>

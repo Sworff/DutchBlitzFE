@@ -43,7 +43,7 @@ function back() {
 
   <SetWinningScore />
 
-  <CreatePlayers />
+  <CreatePlayers :gameMode />
 
   <section class="flex justify-between">
     <Button

@@ -16,6 +16,7 @@ export type Round = {
 }
 
 export type GameState = {
+  id: string
   winningScore: number
   players: Player[]
   rounds: Round[]
